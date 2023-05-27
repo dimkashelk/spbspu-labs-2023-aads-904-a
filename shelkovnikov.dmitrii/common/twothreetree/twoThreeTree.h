@@ -9,6 +9,7 @@
 #include "twoThreeTreeReverseIterator.h"
 #include "twoThreeTreeReverseIteratorConst.h"
 #include "math_functions.h"
+#include "stack.h"
 namespace dimkashelk
 {
   template< typename Key, typename Value, typename Compare >
@@ -204,6 +205,46 @@ namespace dimkashelk
       bool isEqualFirst = details::isEqual< Key, Compare >(k, node->data[0].first);
       bool isEqualSecond = (node->size == 2 && k == details::isEqual< Key, Compare >(k, node->data[1].first));
       return node && (isEqualFirst || isEqualSecond);
+    }
+    template< typename F >
+    F traverse_lnr(F f) const {
+      node_type *root = root_;
+      Stack< std::pair< unsigned, node_type * > > nodeStack;
+      nodeStack.push({0, root});
+      while (!nodeStack.empty())
+      {
+        root = nodeStack.top();
+        f(root->second.data[root->first].first);
+        nodeStack.pop();
+        if (root->second->size == 2)
+        {
+          if (root->second->third)
+          {
+            nodeStack.push({0, root->second->third});
+          }
+          nodeStack.pushFront({1, root->second});
+          if (root->second->second)
+          {
+            nodeStack.push({0, root->second->second});
+          }
+          if (root->second->first)
+          {
+            nodeStack.push({0, root->second->first});
+          }
+        }
+        else
+        {
+          if (root->second->second)
+          {
+            nodeStack.push({0, root->second->second});
+          }
+          if (root->second->first)
+          {
+            nodeStack.push({0, root->second->first});
+          }
+        }
+      }
+      return f;
     }
   private:
     node_type *fakeNode_;
