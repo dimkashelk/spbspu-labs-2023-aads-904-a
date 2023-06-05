@@ -461,6 +461,7 @@ namespace dimkashelk
     }
     node_type *copy(const two_three_tree_type &tree)
     {
+      size_ = 0;
       root_ = nullptr;
       for (auto iter = tree.cbegin(); iter != tree.cend(); iter++)
       {
