@@ -213,7 +213,7 @@ namespace dimkashelk
       return node && (isEqualFirst || isEqualSecond);
     }
     template< typename F >
-    F traverse_lnr(F f) const
+    F &traverse_lnr(F &f) const
     {
       node_type *root = root_;
       Stack< std::pair< unsigned, node_type * > > nodeStack;
@@ -253,6 +253,51 @@ namespace dimkashelk
       }
       return f;
     }
+    template< typename F >
+    F &traverse_rnl(F &f) const
+    {
+      node_type *root = root_;
+      Stack< std::pair< unsigned, node_type * > > nodeStack;
+      nodeStack.pushFront(getPairTraverseRnl(root));
+      while (!nodeStack.empty())
+      {
+        auto p = nodeStack.top();
+        f(p->second.data[p->first].first);
+        nodeStack.pop();
+        if (p.second->size == 2)
+        {
+          if (p.second->first)
+          {
+            nodeStack.pushFront(getPairTraverseRnl(p.second->first));
+          }
+          if (p.first == 1)
+          {
+            nodeStack.pushFront({0, p.second});
+          }
+          if (p.second->second)
+          {
+            nodeStack.pushFront(getPairTraverseRnl(p.second->second));
+          }
+          if (p.second->third)
+          {
+            nodeStack.pushFront(getPairTraverseRnl(p.second->third));
+          }
+        }
+        else
+        {
+          if (p->second->first)
+          {
+            nodeStack.push(getPairTraverseRnl(p.second->first));
+          }
+          if (p->second->second)
+          {
+            nodeStack.push(getPairTraverseRnl(p.second->second));
+          }
+        }
+      }
+      return f;
+    }
+
   private:
     size_t size_;
     bool was_updated_while_insert_;
@@ -260,6 +305,17 @@ namespace dimkashelk
     node_to_insert *to_insert_;
     node_type *fakeNode_;
     node_type *root_;
+    std::pair< unsigned, node_type * > getPairTraverseRnl(node_type *node)
+    {
+      if (node->size == 2)
+      {
+        return {1, node};
+      }
+      else
+      {
+        return {0, node};
+      }
+    }
     node_type *getNewNodeFromLeftChild()
     {
       node_type *new_node = new node_type(to_insert_->data[0].first, to_insert_->data[0].second);
