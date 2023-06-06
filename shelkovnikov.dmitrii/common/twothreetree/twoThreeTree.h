@@ -213,7 +213,8 @@ namespace dimkashelk
       return node && (isEqualFirst || isEqualSecond);
     }
     template< typename F >
-    F traverse_lnr(F f) const {
+    F traverse_lnr(F f) const
+    {
       node_type *root = root_;
       Stack< std::pair< unsigned, node_type * > > nodeStack;
       nodeStack.push({0, root});
