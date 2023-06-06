@@ -255,9 +255,8 @@ namespace dimkashelk
     template< typename F >
     F &traverse_rnl(F &f) const
     {
-      node_type *root = root_;
       Stack< std::pair< unsigned, node_type * > > nodeStack;
-      nodeStack.pushFront(getPairTraverseRnl(root));
+      nodeStack.pushFront(getPairTraverseRnl(root_));
       while (!nodeStack.empty())
       {
         auto p = nodeStack.top();
