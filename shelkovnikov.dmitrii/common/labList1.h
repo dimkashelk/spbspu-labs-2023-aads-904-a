@@ -3,6 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include "twothreetree/twoThreeTree.h"
+#include "inputDict.h"
 namespace dimkashelk
 {
   std::ostream &outCustomErrorMessage(std::ostream &out)
@@ -116,18 +117,7 @@ namespace dimkashelk
       {
         break;
       }
-      dict_type data;
-      int key = 0;
-      std::string value;
-      while (file_in)
-      {
-        file_in >> key >> value;
-        if (!file_in)
-        {
-          break;
-        }
-        data.insert(key, value);
-      }
+      auto data = inputDict(file_in);
       file_in.clear();
       dict.insert(dict_name, data);
     }
