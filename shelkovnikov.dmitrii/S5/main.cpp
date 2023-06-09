@@ -43,7 +43,6 @@ int main(int argc, char *argv[])
   catch (const std::logic_error &e)
   {
     outEmptyDictMessage(std::cout) << '\n';
-    return 1;
   }
   return 0;
 }
