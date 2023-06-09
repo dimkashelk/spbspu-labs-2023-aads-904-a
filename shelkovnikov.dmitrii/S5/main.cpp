@@ -13,6 +13,11 @@ std::ostream &outOverflowMessage(std::ostream &out)
   out << "Overflow =(";
   return out;
 }
+std::ostream &outErrorMessage(std::ostream &out)
+{
+  out << "Error =(";
+  return out;
+}
 int main(int argc, char *argv[])
 {
   if (argc != 3)
@@ -42,6 +47,11 @@ int main(int argc, char *argv[])
     else if (direction == "breadth")
     {
       dict.traverse_breadth(summator);
+    }
+    else
+    {
+      outErrorMessage(std::cout) << '\n';
+      return 1;
     }
     std::cout << summator.getKeySum() << " " << summator.getValueSum() << '\n';
   }
