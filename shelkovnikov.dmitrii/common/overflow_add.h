@@ -15,22 +15,10 @@ namespace
     {
       return first < 0 && second < 0 && first < (min_long_long - second);
     }
-    bool isOverMult(long long first, long long second)
-    {
-      return (first > max_long_long / second) && ((first > 0 && second > 0) || (first < 0 && second < 0));
-    }
-    bool isUnderMult(long long first, long long second)
-    {
-      return (first < min_long_long / second) && ((first > 0 && second < 0) || (first < 0 && second > 0));
-    }
   }
   bool isOverflowedAdd(long long first, long long second)
   {
     return isOverAdd(first, second) || isUnderAdd(first, second);
-  }
-  bool isOverflowedMult(long long first, long long second)
-  {
-    return isOverMult(first, second) || isUnderMult(first, second);
   }
 }
 

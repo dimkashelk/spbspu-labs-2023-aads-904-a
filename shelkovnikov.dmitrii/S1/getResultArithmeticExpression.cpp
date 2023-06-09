@@ -2,9 +2,24 @@
 #include <limits>
 #include <stdexcept>
 #include <stack.h>
-#include <overflow_add_mult.h>
+#include <overflow_add.h>
 namespace
 {
+  namespace
+  {
+    bool isOverMult(long long first, long long second)
+    {
+      return (first > max_long_long / second) && ((first > 0 && second > 0) || (first < 0 && second < 0));
+    }
+    bool isUnderMult(long long first, long long second)
+    {
+      return (first < min_long_long / second) && ((first > 0 && second < 0) || (first < 0 && second > 0));
+    }
+  }
+  bool isOverflowedMult(long long first, long long second)
+  {
+    return isOverMult(first, second) || isUnderMult(first, second);
+  }
   long long getResult(long long first, long long second, dimkashelk::Operator oper)
   {
     if (oper.isAdd())
