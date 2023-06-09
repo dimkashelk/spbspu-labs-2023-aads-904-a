@@ -3,6 +3,6 @@
 #include "twothreetree/twoThreeTree.h"
 namespace dimkashelk
 {
-  TwoThreeTree< int, std::string, std::less< > > inputDict(std::istream &in);
+  TwoThreeTree< long long, std::string, std::less< > > inputDict(std::istream &in);
 }
 #endif
