@@ -96,7 +96,7 @@ namespace dimkashelk
   }
   void labList1(std::istream &in, std::ostream &out, int argc, char *argv[])
   {
-    using dict_type = dimkashelk::TwoThreeTree< int, std::string, std::less< > >;
+    using dict_type = dimkashelk::TwoThreeTree< long long, std::string, std::less< > >;
     using container_type = dimkashelk::TwoThreeTree< std::string, dict_type, std::less< > >;
     namespace dsk = dimkashelk;
     if (argc != 2)
