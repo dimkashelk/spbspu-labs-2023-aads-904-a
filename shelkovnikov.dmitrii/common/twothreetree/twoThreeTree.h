@@ -11,6 +11,7 @@
 #include "twoThreeTreeReverseIteratorConst.h"
 #include "math_functions.h"
 #include "stack.h"
+#include "queue.h"
 namespace dimkashelk
 {
   template< typename Key, typename Value, typename Compare >
@@ -295,7 +296,34 @@ namespace dimkashelk
       }
       return f;
     }
-
+    template< typename F >
+    F &traverse_breadth(F &f) const
+    {
+      dimkashelk::Queue< node_type * > queue;
+      queue.push(root_);
+      while (!queue.empty()) {
+        node_type *node = queue.front();
+        if (node->size == 2)
+        {
+          f(node->data[0]);
+          f(node->data[1]);
+        }
+        queue.pop();
+        if (node->first)
+        {
+          queue.push(node->first);
+        }
+        if (node->second)
+        {
+          queue.push(node->second);
+        }
+        if (node->third)
+        {
+          queue.push(node->third);
+        }
+      }
+      return f;
+    }
   private:
     size_t size_;
     bool was_updated_while_insert_;
