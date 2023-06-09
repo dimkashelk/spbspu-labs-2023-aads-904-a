@@ -217,37 +217,35 @@ namespace dimkashelk
     F &traverse_lnr(F &f) const
     {
       Stack< std::pair< unsigned, node_type * > > nodeStack;
-      nodeStack.pushFront({0, root_});
-      while (!nodeStack.empty())
+      node_type *node = root_;
+      while (!nodeStack.empty()  || node != nullptr)
       {
-        auto p = nodeStack.front();
-        f(p.second->data[p.first]);
-        nodeStack.popFront();
-        if (p.second->size == 2)
+        if (node != nullptr)
         {
-          if (p.second->third)
-          {
-            nodeStack.pushFront({0, p.second->third});
-          }
-          nodeStack.pushFront({1, p.second});
-          if (p.second->second)
-          {
-            nodeStack.pushFront({0, p.second->second});
-          }
-          if (p.second->first)
-          {
-            nodeStack.pushFront({0, p.second->first});
-          }
+          nodeStack.pushFront({0, node});
+          node = node->first;
         }
         else
         {
-          if (p.second->second)
+          std::pair< unsigned, node_type * > p = nodeStack.front();
+          nodeStack.popFront();
+          node = p.second;
+          f(p.second->data[p.first]);
+          if (p.second->size == 2)
           {
-            nodeStack.pushFront({0, p.second->second});
+            if (p.first == 0)
+            {
+              nodeStack.pushFront({1, node});
+              node = node->second;
+            }
+            else
+            {
+              node = node->third;
+            }
           }
-          if (p.second->first)
+          else
           {
-            nodeStack.pushFront({0, p.second->first});
+            node = node->second;
           }
         }
       }
