@@ -308,7 +308,7 @@ namespace dimkashelk
           f(node->data[0]);
           f(node->data[1]);
         }
-        queue.pop();
+        queue.popFront();
         if (node->first)
         {
           queue.push(node->first);

@@ -27,6 +27,10 @@ int main(int argc, char *argv[])
   {
     dict.traverse_rnl(keySumm);
   }
-
+  else if (direction == "breadth")
+  {
+    dict.traverse_breadth(keySumm);
+  }
+  std::cout << keySumm.result;
   return 0;
 }
