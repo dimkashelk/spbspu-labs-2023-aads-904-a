@@ -3,11 +3,16 @@
 #include <string>
 namespace dimkashelk
 {
-  struct KeySumm
+  class Summator
   {
-    KeySumm();
+  public:
+    Summator();
     void operator()(const std::pair< const int, std::string > &key_value);
-    int result;
+    long long getKeySum();
+    std::string getValueSum();
+  private:
+    long long keySumm_;
+    std::string valueSumm_;
   };
 }
 #endif

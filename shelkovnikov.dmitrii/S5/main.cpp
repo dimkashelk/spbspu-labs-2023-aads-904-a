@@ -2,7 +2,7 @@
 #include <fstream>
 #include <twothreetree/twoThreeTree.h>
 #include <inputDict.h>
-#include <keySumm.h>
+#include <summator.h>
 int main(int argc, char *argv[])
 {
   if (argc != 3)
@@ -16,21 +16,21 @@ int main(int argc, char *argv[])
     std::cout << "Check file";
     return 2;
   }
-  auto dict = dimkashelk::inputDict(std::cin);
+  auto dict = dimkashelk::inputDict(in);
   std::string direction(argv[1]);
-  dimkashelk::KeySumm keySumm;
+  dimkashelk::Summator summator;
   if (direction == "ascending")
   {
-    dict.traverse_lnr(keySumm);
+    dict.traverse_lnr(summator);
   }
   else if (direction == "descending")
   {
-    dict.traverse_rnl(keySumm);
+    dict.traverse_rnl(summator);
   }
   else if (direction == "breadth")
   {
-    dict.traverse_breadth(keySumm);
+    dict.traverse_breadth(summator);
   }
-  std::cout << keySumm.result;
+  std::cout << summator.getKeySum() << " " << summator.getValueSum() << '\n';
   return 0;
 }
