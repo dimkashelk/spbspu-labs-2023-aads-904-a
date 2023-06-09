@@ -8,6 +8,11 @@ std::ostream &outEmptyDictMessage(std::ostream &out)
   out << "<EMPTY>";
   return out;
 }
+std::ostream &outOverflowMessage(std::ostream &out)
+{
+  out << "Overflow =(";
+  return out;
+}
 int main(int argc, char *argv[])
 {
   if (argc != 3)
@@ -43,6 +48,11 @@ int main(int argc, char *argv[])
   catch (const std::logic_error &e)
   {
     outEmptyDictMessage(std::cout) << '\n';
+  }
+  catch (const std::overflow_error &e)
+  {
+    outOverflowMessage(std::cout) << '\n';
+    return 2;
   }
   return 0;
 }
