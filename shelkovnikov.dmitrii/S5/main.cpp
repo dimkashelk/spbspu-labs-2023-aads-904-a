@@ -3,6 +3,11 @@
 #include <twothreetree/twoThreeTree.h>
 #include <inputDict.h>
 #include <summator.h>
+std::ostream &outEmptyDictMessage(std::ostream &out)
+{
+  out << "<EMPTY>";
+  return out;
+}
 int main(int argc, char *argv[])
 {
   if (argc != 3)
@@ -19,18 +24,26 @@ int main(int argc, char *argv[])
   auto dict = dimkashelk::inputDict(in);
   std::string direction(argv[1]);
   dimkashelk::Summator summator;
-  if (direction == "ascending")
+  try
   {
-    dict.traverse_lnr(summator);
+    if (direction == "ascending")
+    {
+      dict.traverse_lnr(summator);
+    }
+    else if (direction == "descending")
+    {
+      dict.traverse_rnl(summator);
+    }
+    else if (direction == "breadth")
+    {
+      dict.traverse_breadth(summator);
+    }
+    std::cout << summator.getKeySum() << " " << summator.getValueSum() << '\n';
   }
-  else if (direction == "descending")
+  catch (const std::logic_error &e)
   {
-    dict.traverse_rnl(summator);
+    outEmptyDictMessage(std::cout) << '\n';
+    return 1;
   }
-  else if (direction == "breadth")
-  {
-    dict.traverse_breadth(summator);
-  }
-  std::cout << summator.getKeySum() << " " << summator.getValueSum() << '\n';
   return 0;
 }
