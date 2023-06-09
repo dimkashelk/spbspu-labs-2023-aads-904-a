@@ -216,6 +216,10 @@ namespace dimkashelk
     template< typename F >
     F &traverse_lnr(F &f) const
     {
+      if (empty())
+      {
+        throw std::logic_error("Empty tree");
+      }
       Stack< std::pair< unsigned, node_type * > > nodeStack;
       node_type *node = root_;
       while (!nodeStack.empty()  || node != nullptr)
@@ -254,6 +258,10 @@ namespace dimkashelk
     template< typename F >
     F &traverse_rnl(F &f) const
     {
+      if (empty())
+      {
+        throw std::logic_error("Empty tree");
+      }
       Stack< std::pair< unsigned, node_type * > > nodeStack;
       node_type *node = root_;
       while (!nodeStack.empty()  || node != nullptr)
@@ -292,13 +300,17 @@ namespace dimkashelk
     template< typename F >
     F &traverse_breadth(F &f) const
     {
+      if (empty())
+      {
+        throw std::logic_error("Empty tree");
+      }
       dimkashelk::Queue< node_type * > queue;
       queue.push(root_);
       while (!queue.empty()) {
         node_type *node = queue.front();
+        f(node->data[0]);
         if (node->size == 2)
         {
-          f(node->data[0]);
           f(node->data[1]);
         }
         queue.popFront();
