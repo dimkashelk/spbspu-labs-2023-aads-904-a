@@ -2,37 +2,9 @@
 #include <limits>
 #include <stdexcept>
 #include <stack.h>
+#include <overflow_add_mult.h>
 namespace
 {
-  constexpr long long max_long_long = std::numeric_limits< long long >::max();
-  constexpr long long min_long_long = std::numeric_limits< long long >::min();
-  namespace
-  {
-    bool isOverAdd(long long first, long long second)
-    {
-      return first > 0 && second > 0 && second > (max_long_long - first);
-    }
-    bool isUnderAdd(long long first, long long second)
-    {
-      return first < 0 && second < 0 && first < (min_long_long - second);
-    }
-    bool isOverMult(long long first, long long second)
-    {
-      return (first > max_long_long / second) && ((first > 0 && second > 0) || (first < 0 && second < 0));
-    }
-    bool isUnderMult(long long first, long long second)
-    {
-      return (first < min_long_long / second) && ((first > 0 && second < 0) || (first < 0 && second > 0));
-    }
-  }
-  bool isOverflowedAdd(long long first, long long second)
-  {
-    return isOverAdd(first, second) || isUnderAdd(first, second);
-  }
-  bool isOverflowedMult(long long first, long long second)
-  {
-    return isOverMult(first, second) || isUnderMult(first, second);
-  }
   long long getResult(long long first, long long second, dimkashelk::Operator oper)
   {
     if (oper.isAdd())
