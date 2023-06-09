@@ -21,7 +21,12 @@ int main(int argc, char *argv[])
   dimkashelk::KeySumm keySumm;
   if (direction == "ascending")
   {
+    dict.traverse_lnr(keySumm);
+  }
+  else if (direction == "descending")
+  {
     dict.traverse_rnl(keySumm);
   }
+
   return 0;
 }
