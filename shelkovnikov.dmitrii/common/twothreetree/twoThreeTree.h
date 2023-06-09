@@ -260,9 +260,9 @@ namespace dimkashelk
       nodeStack.pushFront(getPairTraverseRnl(root_));
       while (!nodeStack.empty())
       {
-        auto p = nodeStack.top();
-        f(p->second.data[p->first].first);
-        nodeStack.pop();
+        auto p = nodeStack.front();
+        f(p.second->data[p.first]);
+        nodeStack.popFront();
         if (p.second->size == 2)
         {
           if (p.second->first)
@@ -284,13 +284,13 @@ namespace dimkashelk
         }
         else
         {
-          if (p->second->first)
+          if (p.second->first)
           {
-            nodeStack.push(getPairTraverseRnl(p.second->first));
+            nodeStack.pushFront(getPairTraverseRnl(p.second->first));
           }
-          if (p->second->second)
+          if (p.second->second)
           {
-            nodeStack.push(getPairTraverseRnl(p.second->second));
+            nodeStack.pushFront(getPairTraverseRnl(p.second->second));
           }
         }
       }
@@ -331,7 +331,7 @@ namespace dimkashelk
     node_to_insert *to_insert_;
     node_type *fakeNode_;
     node_type *root_;
-    std::pair< unsigned, node_type * > getPairTraverseRnl(node_type *node)
+    std::pair< unsigned, node_type * > getPairTraverseRnl(node_type *node) const
     {
       if (node->size == 2)
       {
